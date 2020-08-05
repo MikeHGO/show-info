@@ -6,8 +6,8 @@ Aplicativo para vizualizar informações de séries utilizando a API [TVmaze](ht
 
 ---
 
-<img src="screenshots/main.jpg" width="450"/> <img src="screenshots/cover.jpg" width="450"/>
-<img src="screenshots/info.jpg" width="450"/> <img src="screenshots/info2.jpg" width="450"/>
+<img src="screenshots/main.jpg" width="400"/> <img src="screenshots/cover.jpg" width="400"/>
+<img src="screenshots/info.jpg" width="400"/> <img src="screenshots/info2.jpg" width="400"/>
 
 ---
 
