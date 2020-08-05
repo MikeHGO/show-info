@@ -1,10 +1,9 @@
-import { StatusBar } from 'react-native';
-import styled from 'styled-components';
+import { StatusBar } from "react-native";
+import styled from "styled-components";
 const STATUSBAR_HEIGHT = StatusBar.currentHeight;
 
 export const Container = styled.ImageBackground`
 	flex: 1;
-	padding-top: ${STATUSBAR_HEIGHT}px;
 `;
 
 export const SubContainer = styled.View`
@@ -55,8 +54,9 @@ export const Content = styled.View`
 	padding-top: ${STATUSBAR_HEIGHT}px;
 `;
 
-export const InfoContainer = styled.View`
+export const InfoContainer = styled.ScrollView`
 	padding: 20px;
+	margin-bottom: 15px;
 `;
 
 export const InfoSubContainer = styled.View`
