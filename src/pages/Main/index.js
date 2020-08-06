@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import { useFocusEffect } from "@react-navigation/native";
-
+import React, { useState } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
+import { View, Text, Button, TouchableOpacity, Image } from 'react-native';
 import {
 	Container,
 	SearchBar,
@@ -8,34 +8,31 @@ import {
 	ListSubContainer,
 	TextWhite,
 	ShowItem,
-} from "./styles";
-
-import api from "../../services/api";
+} from './styles';
+import api from '../../services/api';
 
 export default function index({ navigation }) {
-	const [searchText, setSearchText] = useState("");
+	const [searchText, setSearchText] = useState('');
 	const [showList, setShowList] = useState([]);
 
 	async function loadSearchResults() {
-		const url = `shows?q=${searchText}`;
+		const url = `search/shows?q=${searchText}`;
 		const response = await api.get(url);
 		const showData = response.data;
 		setShowList(showData);
+		console.log(searchText);
+		console.log(showList);
 	}
 
-	useFocusEffect(
-		React.useCallback(() => {
-			loadSearchResults();
-		}, [searchText])
-	);
-
 	return (
-		<Container source={require("../../../assets/main.jpg")}>
+		<Container source={require('../../../assets/main.jpg')}>
 			<SubContainer>
 				<SearchBar
-					placeholder={"Search title..."}
+					placeholder={'Show Title...'}
 					onChangeText={(text) => setSearchText(text)}
 					defaultValue={searchText}
+					returnKeyType="search"
+					onSubmitEditing={() => loadSearchResults()}
 				/>
 
 				<ListSubContainer>
@@ -43,16 +40,12 @@ export default function index({ navigation }) {
 						showList.map((item) => {
 							return (
 								<ShowItem
-									onPress={() => navigation.navigate("Info", { id: item.id })}
-									key={item.id}
+									onPress={() =>
+										navigation.navigate('Info', { id: item.show.id })
+									}
+									key={item.show.id}
 								>
-									{/* <Image
-										source={{
-											uri: item.image.medium,
-										}}
-										style={{ width: '3%', height: '3%' }}
-									/> */}
-									<TextWhite>{item.name}</TextWhite>
+									<TextWhite>{item.show.name}</TextWhite>
 								</ShowItem>
 							);
 						})}
