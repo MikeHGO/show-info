@@ -1,5 +1,5 @@
-import { StatusBar } from "react-native";
-import styled from "styled-components";
+import { StatusBar } from 'react-native';
+import styled from 'styled-components';
 const STATUSBAR_HEIGHT = StatusBar.currentHeight;
 
 export const Container = styled.ImageBackground`
@@ -17,10 +17,12 @@ export const Title = styled.Text`
 	font-size: 40px;
 	font-weight: bold;
 	margin-bottom: 15px;
+	flex-wrap: wrap;
 `;
 
 export const FlexRowBox = styled.View`
 	flex-direction: row;
+	flex-wrap: wrap;
 `;
 
 export const GenreItem = styled.View`
@@ -41,6 +43,7 @@ export const TextWhite = styled.Text`
 	color: #fff;
 	font-size: 17px;
 	margin-top: 7px;
+	text-align: justify;
 `;
 
 export const TextBlue = styled.Text`

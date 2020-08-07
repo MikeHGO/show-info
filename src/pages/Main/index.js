@@ -15,19 +15,21 @@ import api from '../../services/api';
 export default function index({ navigation }) {
 	const [searchText, setSearchText] = useState('');
 	const [showList, setShowList] = useState([]);
-	const [fetchingData, setFetchingData] = useState(false);
-	const [noDataFound, setNoDataFound] = useState(false);
+	const [msg, setMsg] = useState(
+		'Welcome to Show Info! Type the show title in the search bar above then press ENTER key to submit'
+	);
 
 	async function loadSearchResults() {
-		setFetchingData(true);
+		setMsg('Loading. . .');
 		const url = `search/shows?q=${searchText}`;
 		const response = await api.get(url);
 		const showData = response.data;
 		setShowList(showData);
-		showList.length === 0 ? setNoDataFound(true) : setNoDataFound(false);
-		setFetchingData(false);
-		// console.log(searchText);
-		// console.log('Vazio: ', showData);
+		showList.length === 0
+			? setMsg("Sorry, we didn't find any show with that title.")
+			: setMsg('');
+
+		console.log(showList);
 	}
 
 	return (
@@ -42,25 +44,9 @@ export default function index({ navigation }) {
 				/>
 
 				<ListSubContainer>
-					{!fetchingData &&
-						showList.length === 0 &&
-						searchText.trim() === '' && (
-							<MsgText>
-								Welcome to Show Info! Type the show title in the search bar
-								above then press ENTER key to submit
-							</MsgText>
-						)}
+					{showList.length === 0 && <MsgText>{msg}</MsgText>}
 
-					{noDataFound && showList.length === 0 && searchText.trim() !== '' && (
-						<MsgText>
-							Sorry, we didn't find any show with{'\n'}that title.
-						</MsgText>
-					)}
-
-					{fetchingData && <MsgText>Loading. . .</MsgText>}
-
-					{!fetchingData &&
-						showList.length > 0 &&
+					{showList.length > 0 &&
 						showList.map((item) => {
 							return (
 								<ShowItem

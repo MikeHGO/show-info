@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import { useRoute, useFocusEffect } from "@react-navigation/native";
-import { Linking, Dimensions, Image } from "react-native";
-import { TabView, SceneMap, TabBar } from "react-native-tab-view";
+import React, { useState } from 'react';
+import { useRoute, useFocusEffect } from '@react-navigation/native';
+import { Linking, Dimensions, Image } from 'react-native';
+import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 
 import {
 	Container,
@@ -14,17 +14,16 @@ import {
 	TextBlue,
 	InfoContainer,
 	InfoSubContainer,
-} from "./styles";
+} from './styles';
 
-import api from "../../services/api";
+import api from '../../services/api';
 
 const Info = () => {
 	const route = useRoute();
 	const showId = route.params.id;
 	const [showInfo, setShowInfo] = useState({});
-	// Trocar string por ulr de icone .gif de loading
 	const [showCover, setShowCover] = useState(
-		"https://media.giphy.com/media/xUOxfj6cTg3ezmjIoo/giphy.gif"
+		'https://media.giphy.com/media/xUOxfj6cTg3ezmjIoo/giphy.gif'
 	);
 
 	async function loadShowInfo() {
@@ -33,17 +32,25 @@ const Info = () => {
 		const showData = response.data;
 
 		const showfetchInfo = {
+			// Checando se os dados existem e atribuindo
 			name: showData.name,
-			premiered: showData.premiered,
-			rating: showData.rating.average,
-			language: showData.language,
+			premiered: showData.premiered ? showData.premiered : 'Not found',
+			rating: showData.rating.average ? showData.rating.average : 'Not found',
+			language: showData.language ? showData.language : 'Not found',
 			genres: [],
-			network: showData.network.name,
-			officialSite: showData.officialSite,
-			episodes: showData._embedded.episodes.length,
-			runtime: showData.runtime,
-			image: showData.image,
-			summary: showData.summary.replace(/\s*\<.*?\>\s*/g, ""),
+			network: showData.network.name ? showData.network.name : 'Not found',
+			officialSite: showData.officialSite
+				? showData.officialSite
+				: 'http://www.tvmaze.com/',
+			episodes: showData._embedded.episodes.length
+				? showData._embedded.episodes.length
+				: 'Not found',
+			runtime: showData.runtime ? showData.runtime : 'Not found',
+			image: showData.image ? showData.image : 'Not found',
+			// regex para formatar a sinopse, remove todos os <> e o que tiver dentro
+			summary: showData.summary
+				? showData.summary.replace(/\s*\<.*?\>\s*/g, '')
+				: 'Not found',
 		};
 
 		const genres = showData.genres;
@@ -55,17 +62,22 @@ const Info = () => {
 		setShowInfo(showfetchInfo);
 	}
 
-	// Executa quando a const show sofrer alteracoes
+	// Executa quando a const showId sofrer alteracoes
 	useFocusEffect(
 		React.useCallback(() => {
 			loadShowInfo();
 		}, [showId])
 	);
 
+	// Abas/Tabs
+
 	const [index, setIndex] = React.useState(0);
 
 	const CoverTab = () => (
-		<Image source={{ uri: showCover }} style={{ width: "100%", height: "100%" }} />
+		<Image
+			source={{ uri: showCover }}
+			style={{ width: '100%', height: '100%' }}
+		/>
 	);
 
 	const InfoTab = () => (
@@ -91,16 +103,18 @@ const Info = () => {
 				<TextBlue onPress={() => Linking.openURL(`${showInfo.officialSite}`)}>
 					{showInfo.network}
 				</TextBlue>
-				<TextWhite style={{ paddingBottom: 20 }}>Summary: {showInfo.summary}</TextWhite>
+				<TextWhite style={{ paddingBottom: 20 }}>
+					Summary: {showInfo.summary}
+				</TextWhite>
 			</InfoSubContainer>
 		</InfoContainer>
 	);
 
-	const initialLayout = { width: Dimensions.get("window").width };
+	const initialLayout = { width: Dimensions.get('window').width };
 
 	const [routes] = React.useState([
-		{ key: "first", title: "COVER" },
-		{ key: "second", title: "INFO" },
+		{ key: 'first', title: 'COVER' },
+		{ key: 'second', title: 'INFO' },
 	]);
 
 	const renderScene = SceneMap({
@@ -111,12 +125,11 @@ const Info = () => {
 	const renderTabBar = (props) => (
 		<TabBar
 			{...props}
-			indicatorStyle={{ backgroundColor: "#4b4b57", height: 3 }}
+			indicatorStyle={{ backgroundColor: '#4b4b57', height: 3 }}
 			activeColor="#000"
 			inactiveColor="#7b7b7b"
 			style={{
-				// backgroundColor: 'transparent',
-				backgroundColor: "#ffffff",
+				backgroundColor: '#ffffff',
 				shadowOpacity: 0,
 				elevation: 0,
 			}}
@@ -124,7 +137,7 @@ const Info = () => {
 	);
 
 	return (
-		<Container source={require("../../../assets/info.jpg")}>
+		<Container source={require('../../../assets/info.jpg')}>
 			<SubContainer>
 				<TabView
 					navigationState={{ index, routes }}
