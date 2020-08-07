@@ -38,13 +38,14 @@ const Info = () => {
 			rating: showData.rating.average ? showData.rating.average : 'Not found',
 			language: showData.language ? showData.language : 'Not found',
 			genres: [],
-			network: showData.network.name ? showData.network.name : 'Not found',
+			network: showData.network ? showData.network.name : 'Not found',
 			officialSite: showData.officialSite
 				? showData.officialSite
 				: 'http://www.tvmaze.com/',
-			episodes: showData._embedded.episodes.length
-				? showData._embedded.episodes.length
-				: 'Not found',
+			episodes:
+				showData._embedded.episodes.length > 0
+					? showData._embedded.episodes.length
+					: 'Not found',
 			runtime: showData.runtime ? showData.runtime : 'Not found',
 			image: showData.image ? showData.image : 'Not found',
 			// regex para formatar a sinopse, remove todos os <> e o que tiver dentro
