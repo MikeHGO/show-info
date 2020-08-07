@@ -1,5 +1,5 @@
-import { StatusBar } from "react-native";
-import styled from "styled-components";
+import { StatusBar } from 'react-native';
+import styled from 'styled-components';
 const STATUSBAR_HEIGHT = StatusBar.currentHeight;
 
 export const Container = styled.ImageBackground`
@@ -25,6 +25,16 @@ export const TextWhite = styled.Text`
 	color: #fff;
 	font-size: 17px;
 	margin-top: 7px;
+	flex-wrap: wrap;
+`;
+
+export const MsgText = styled.Text`
+	color: #fff;
+	font-size: 30px;
+	margin-top: 7px;
+	flex-wrap: wrap;
+	text-align: center;
+	padding: 20px;
 `;
 
 export const ListSubContainer = styled.ScrollView`
