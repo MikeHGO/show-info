@@ -1,6 +1,4 @@
-import { StatusBar } from 'react-native';
 import styled from 'styled-components';
-const STATUSBAR_HEIGHT = StatusBar.currentHeight;
 
 export const Container = styled.ImageBackground`
 	flex: 1;
@@ -21,17 +19,11 @@ export const SubContainer = styled.View`
 	background-color: rgba(27, 27, 27, 0.6);
 `;
 
-export const TextWhite = styled.Text`
-	color: #fff;
-	font-size: 17px;
-	margin-top: 7px;
-	flex-wrap: wrap;
-`;
-
 export const MsgText = styled.Text`
 	color: #fff;
 	font-size: 30px;
 	margin-top: 7px;
+	margin-right: 15px;
 	flex-wrap: wrap;
 	text-align: center;
 	padding: 20px;
@@ -41,9 +33,10 @@ export const ListSubContainer = styled.ScrollView`
 	margin: 15px;
 	margin-top: 0px;
 	margin-bottom: 30px;
-	padding: 0px;
+	padding-left: 15px;
 	background-color: rgba(27, 27, 27, 0.8);
 	border-radius: 6px;
+	flex-wrap: wrap;
 `;
 
 export const ShowItem = styled.TouchableOpacity`
@@ -51,5 +44,24 @@ export const ShowItem = styled.TouchableOpacity`
 	border: 1px solid white;
 	align-items: center;
 	justify-content: center;
-	border-radius: 6px;
+	border-radius: 5px;
+`;
+
+export const MiniCover = styled.ImageBackground`
+	resize-mode: contain;
+	justify-content: flex-end;
+	align-items: center;
+	width: 160px;
+	height: 225px;
+	margin: 3px;
+	border-radius: 5px;
+`;
+
+export const ShowTitle = styled.Text`
+	color: white;
+	background-color: rgba(27, 27, 27, 0.85);
+	padding: 4px;
+	text-align: center;
+	border-top-left-radius: 3px;
+	border-top-right-radius: 3px;
 `;

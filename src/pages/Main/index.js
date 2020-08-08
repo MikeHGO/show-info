@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
-import { useFocusEffect } from '@react-navigation/native';
-import { View, Text, Button, TouchableOpacity, Image } from 'react-native';
+import { FlatList } from 'react-native';
 import {
 	Container,
 	SearchBar,
 	SubContainer,
 	ListSubContainer,
-	TextWhite,
-	ShowItem,
 	MsgText,
+	ShowItem,
+	MiniCover,
+	ShowTitle,
 } from './styles';
 import api from '../../services/api';
 
@@ -27,9 +27,9 @@ export default function index({ navigation }) {
 		setShowList(showData);
 		showList.length === 0
 			? setMsg("Sorry, we didn't find any show with that title.")
-			: setMsg('');
+			: setMsg("Sorry, we didn't find any show with that title.");
 
-		console.log(showList);
+		console.log(showData.length);
 	}
 
 	return (
@@ -43,22 +43,36 @@ export default function index({ navigation }) {
 					onSubmitEditing={() => loadSearchResults()}
 				/>
 
-				<ListSubContainer>
+				<ListSubContainer showsVerticalScrollIndicator={false}>
 					{showList.length === 0 && <MsgText>{msg}</MsgText>}
-
-					{showList.length > 0 &&
-						showList.map((item) => {
-							return (
-								<ShowItem
-									onPress={() =>
-										navigation.navigate('Info', { id: item.show.id })
-									}
-									key={item.show.id}
-								>
-									<TextWhite>{item.show.name}</TextWhite>
-								</ShowItem>
-							);
-						})}
+					{showList.length > 0 && (
+						<FlatList
+							showsHorizontalScrollIndicator={false}
+							data={showList}
+							keyExtractor={(item) => item.show.id}
+							numColumns={2}
+							renderItem={({ item }) => {
+								return (
+									<ShowItem
+										onPress={() =>
+											navigation.navigate('Info', { id: item.show.id })
+										}
+									>
+										<MiniCover
+											imageStyle={{ borderRadius: 3 }}
+											source={{
+												uri: item.show.image
+													? item.show.image.medium
+													: 'https://media.giphy.com/media/3zhxq2ttgN6rEw8SDx/giphy.gif',
+											}}
+										>
+											<ShowTitle>{item.show.name}</ShowTitle>
+										</MiniCover>
+									</ShowItem>
+								);
+							}}
+						/>
+					)}
 				</ListSubContainer>
 			</SubContainer>
 		</Container>
